@@ -41,4 +41,10 @@ public class EmployeeJPAController {
 
         return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
+
+    @PostMapping("/create/employeedept")
+    public ResponseEntity<Void> addEmployeeWithDepartment(@RequestBody Employee employee){
+        repository.save(employee);
+        return ResponseEntity.noContent().build();
+    }
 }

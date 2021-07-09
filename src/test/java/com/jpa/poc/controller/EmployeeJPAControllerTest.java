@@ -1,5 +1,6 @@
 package com.jpa.poc.controller;
 
+import com.jpa.poc.models.Department;
 import com.jpa.poc.models.Employee;
 import com.jpa.poc.repo.EmployeeRepository;
 import org.junit.Assert;
@@ -27,7 +28,8 @@ public class EmployeeJPAControllerTest {
     @Test
     public void getEmployee() {
 
-        Employee employee1 = new Employee(110L, "praveen", "rtpp");
+        Department department = new Department(1070, "car-shed");
+        Employee employee1 = new Employee(110L, "praveen", "rtpp", department);
 
         when(repository.findById(any())).thenReturn(Optional.of(employee1));
         final ResponseEntity<Employee> employee = controller.getEmployee(110);
@@ -38,7 +40,8 @@ public class EmployeeJPAControllerTest {
     @Test(expected = IllegalArgumentException.class)
     public void getEmployee_exception_test() {
 
-        Employee employee1 = new Employee(110L, "praveen", "rtpp");
+        Department department = new Department(1060, "pharma");
+        Employee employee1 = new Employee(110L, "praveen", "rtpp", department);
         when(repository.findById(111L)).thenReturn(Optional.of(employee1));
         final ResponseEntity<Employee> employee = controller.getEmployee(110);
     }
@@ -46,7 +49,8 @@ public class EmployeeJPAControllerTest {
     @Test
     public void addEmployee() {
 
-        Employee employee = new Employee(110L, "praveen", "rtpp");
+        Department department = new Department(1040, "non-veg");
+        Employee employee = new Employee(110L, "praveen", "rtpp", department);
         when(repository.save(any(Employee.class))).thenReturn(employee);
         final ResponseEntity<Void> responseEntity = controller.addEmployee(employee);
 
@@ -57,9 +61,13 @@ public class EmployeeJPAControllerTest {
     @Test
     public void getAllEmployees() {
 
-        Employee employee1 = new Employee(110L, "praveen", "rtpp");
-        Employee employee2 = new Employee(120L, "kiran", "pdtr");
-        Employee employee3 = new Employee(130L, "laddu", "chmkr");
+        Department department1 = new Department(1000, "store");
+        Department department2 = new Department(1020, "vegetables");
+        Department department3 = new Department(1030, "groceery");
+
+        Employee employee1 = new Employee(110L, "praveen", "rtpp", department1);
+        Employee employee2 = new Employee(120L, "kiran", "pdtr", department2);
+        Employee employee3 = new Employee(130L, "laddu", "chmkr", department3);
 
         final List<Employee> employees = Arrays.asList(employee1, employee2, employee3);
         when(repository.findAll()).thenReturn(employees);

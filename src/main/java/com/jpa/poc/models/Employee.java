@@ -2,10 +2,7 @@ package com.jpa.poc.models;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -23,5 +20,10 @@ public class Employee {
 
     @Setter(AccessLevel.NONE)
     private String address;
+
+    @Setter(AccessLevel.NONE)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dept_id", referencedColumnName = "deptId")
+    private Department department;
 
 }
